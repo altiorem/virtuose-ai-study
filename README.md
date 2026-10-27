@@ -1,31 +1,26 @@
-# Virtuose AI Study — Version 4 : formules d'électricité intégrées
+# Virtuose AI Study — archive complète
 
-Cette version reprend la bibliothèque de cours de la version 3 et ajoute automatiquement à la base SQLite une fiche de connaissances avec les définitions, les formules principales, les unités et les références web pour :
-- courant électrique;
-- force de Coulomb;
-- champ électrique;
-- potentiel électrique;
-- effet Joule.
+Cette archive conserve les fichiers séparés dans leur emplacement habituel pour une application Flask. Le backend est dans `app.py`, les pages HTML dans `templates/`, le CSS dans `static/css/` et le JavaScript dans `static/js/`.
 
-## Ce qui change
-- Au démarrage, `app.py` insère une seule fois la fiche intégrée dans la table `courses` de `virtuose_courses.sqlite3`.
-- La fiche apparaît dans la bibliothèque des cours et la recherche par mots-clés peut l'ajouter au contexte envoyé à Gemini.
-- Les formules et sources sont enregistrées dans la base de données de l'application; ce n'est pas un réentraînement du modèle Gemini.
+## Structure
 
-## Déploiement Render
-Build command : `pip install -r requirements.txt`
-Start command : `gunicorn app:app`
-Variables d'environnement recommandées :
-- `APP_PASSWORD` : mot de passe privé du site (obligatoire)
-- `GEMINI_API_KEY` : clé API privée, uniquement dans Render
-- `GEMINI_MODEL=gemini-2.5-flash`
-- `DAILY_LIMIT=10`
-- `SESSION_SECRET` : chaîne aléatoire longue
+- `app.py` : serveur Flask, routes et logique de l’assistant.
+- `templates/index.html` : interface principale.
+- `templates/login.html` : page de connexion.
+- `static/css/style.css` : styles et affichage mobile/ordinateur.
+- `static/js/app.js` : navigation et interactions de l’interface.
+- `requirements.txt` : dépendances Python.
+- `.env.example` : exemple de variables à configurer.
 
-Ne mets jamais la clé API dans GitHub ni dans le code source.
+## Déploiement sur Render
 
-## Mise à jour d'une application déjà déployée
-Téléverse les fichiers de cette archive dans le dépôt GitHub utilisé par Render, puis laisse Render redéployer. La fiche sera ajoutée au démarrage. Si le site utilise une base SQLite persistante existante, la fiche sera insérée une seule fois; si l'hébergement repart d'un stockage éphémère vide, elle sera recréée automatiquement au prochain démarrage.
+- Build command : `pip install -r requirements.txt`
+- Start command : `gunicorn app:app --workers 1 --threads 4 --timeout 120`
 
-## Limites
-Le stockage SQLite local n'est pas garanti persistant sur Render Free. Pour garder aussi les cours importés par l'utilisateur de façon durable, configure une base de données persistante. Les extraits pertinents envoyés à Gemini quittent le serveur pour être traités par l'API Google. Vérifie les réponses et les sources originales.
+Variables à configurer dans les paramètres du service : `APP_PASSWORD` (obligatoire), `GEMINI_API_KEY` (si tu utilises Gemini), et éventuellement `GEMINI_MODEL`, `DAILY_LIMIT`, `SESSION_SECRET`. Ne mets jamais ta clé API dans les fichiers publics.
+
+## Avant de remplacer l’application actuelle
+
+1. Télécharge et garde une copie de ton ancienne archive et de ton ancien `app.py`.
+2. Ne supprime pas ta base de données SQLite si elle contient tes cours.
+3. Cette archive a été vérifiée pour la syntaxe Python, mais elle n’a pas encore été testée de bout en bout sur ton compte Render.

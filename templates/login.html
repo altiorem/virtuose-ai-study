@@ -1,1 +1,8 @@
-
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Connexion — Virtuose AI Study</title><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body><div class="login">
+<div><div class="logo"><b>🎓 Virtuose AI Study</b></div><h1>Ton assistant d’apprentissage intelligent</h1><p class="muted">Réussis tes études, construis ton avenir.</p></div>
+<div class="box"><h2>Connexion</h2><p class="muted">Accède à ton espace d’apprentissage.</p>
+{% if not configured %}<p class="muted">Le site n’est pas encore configuré : ajoute APP_PASSWORD dans les variables d’environnement, puis redémarre.</p>
+{% else %}<form method="post"><input name="password" type="password" placeholder="Mot de passe" required autocomplete="current-password" autofocus><button class="gold" type="submit">Se connecter</button></form>
+{% if error %}<p class="muted">Mot de passe incorrect.</p>{% endif %}{% if locked %}<p class="muted">Trop de tentatives. Réessaie dans 15 minutes.</p>{% endif %}{% endif %}
+</div></div></body></html>

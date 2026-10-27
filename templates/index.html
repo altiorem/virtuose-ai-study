@@ -1,1 +1,39 @@
-templates/index.html
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09090b"><meta name="csrf" content="{{ csrf }}"><title>Virtuose AI Study</title><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body><div class="app">
+<header class="top"><div class="logo"><button id="burger" aria-label="Menu">☰</button><b>🎓 Virtuose AI Study</b></div>
+<form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{ csrf }}"><button class="ghost">Déconnexion</button></form></header>
+<nav class="side" id="side">
+<button data-v="home" class="on">🏠 Accueil</button><button data-v="chat">💬 Assistant IA</button><button data-v="courses">📖 Mes cours</button>
+<button data-v="add">📚 Bibliothèque</button><button data-v="quiz">✅ Quiz & Exercices</button><button data-v="history">🕘 Historique</button><button data-v="settings">⚙️ Paramètres</button></nav>
+<main>
+<section class="view on" id="v-home"><div class="hero"><h2>Bonjour ! 👋</h2><p>Prêt à apprendre aujourd’hui ? Pose ta question, explore tes cours, fais des exercices.</p></div>
+<div class="cards"><div class="card" data-v="chat"><i>💬</i><b>Poser une question</b><span class="muted">Une réponse claire et détaillée</span></div>
+<div class="card" data-v="courses"><i>📖</i><b>Mes cours</b><span class="muted">Ta bibliothèque de cours</span></div>
+<div class="card" data-v="quiz"><i>✅</i><b>Quiz & Exercices</b><span class="muted">Teste tes connaissances</span></div>
+<div class="card" data-v="add"><i>📚</i><b>Bibliothèque</b><span class="muted">Ajoute tes documents</span></div></div></section>
+
+<section class="view" id="v-chat"><h2>Assistant IA</h2><p class="muted">Pose ta question sur n’importe quelle matière.</p>
+<div class="row"><select id="subject"><option>Mathématiques</option><option>Physique</option><option>Électricité</option><option>Informatique</option><option>Droit</option><option>Autre</option></select>
+<select id="mode"><option value="expliquer">Comprendre</option><option value="exercice">Exercice</option><option value="resume">Fiche de révision</option><option value="plan">Plan d’étude</option></select></div>
+<div class="chat" id="chat"><div class="msg">Bonjour ! Je suis ton assistant Virtuose AI Study. Pose-moi ta question et je te donnerai une réponse claire, adaptée à ton niveau.</div></div>
+<div class="row"><button class="gold" id="learnBtn" style="display:none">🧠 Retenir cette réponse</button></div>
+<div class="chips"><button class="ghost">Explique-moi la loi d’Ohm</button><button class="ghost">Résume ce chapitre</button><button class="ghost">Qu’est-ce que la photosynthèse ?</button></div>
+<form class="ask" id="askForm"><input id="q" placeholder="Pose ta question…" autocomplete="off"><button class="gold" aria-label="Envoyer">➤</button></form><p class="muted" id="status"></p></section>
+
+<section class="view" id="v-courses"><div class="row" style="justify-content:space-between;align-items:center"><div><h2>Mes cours</h2><p class="muted">Ta bibliothèque de cours et documents</p></div><button class="gold" data-v="add">+ Ajouter un cours</button></div>
+<input class="search" id="search" placeholder="Rechercher un cours…"><div class="list" id="list"></div></section>
+
+<section class="view" id="v-add"><h2>Ajouter un cours ou un document</h2><p class="muted">PDF, DOCX, TXT, MD, PNG, JPG, WEBP — 12 Mo max.</p>
+<div class="drop" id="drop">☁️<br><b>Glisse ton fichier ici ou clique pour le choisir</b></div><input type="file" id="file" hidden>
+<p>Ou colle le texte directement :</p><input class="search" id="ctitle" placeholder="Titre du cours" style="margin-bottom:8px"><textarea id="ctext" placeholder="Colle ici le contenu de ton cours…"></textarea>
+<div class="row"><button class="gold" id="saveText">Enregistrer</button></div><p class="muted" id="addStatus"></p></section>
+
+<section class="view" id="v-quiz"><h2>Quiz & Exercices</h2><p class="muted">Teste tes connaissances et améliore-toi.</p>
+<div class="row"><select id="qsubject"><option>Mathématiques</option><option>Physique</option><option>Électricité</option><option>Informatique</option><option>Droit</option></select></div>
+<input class="search" id="qtopic" placeholder="Sujet du quiz (ex. équations du premier degré)"><div class="row"><button class="gold" id="quizBtn">Générer un quiz</button></div><div id="quizOut" hidden></div></section>
+
+<section class="view" id="v-history"><h2>Historique</h2><p class="muted">Tes dernières questions.</p><div class="list" id="hist"></div></section>
+<section class="view" id="v-settings"><h2>Paramètres</h2><p class="muted" id="usage">Chargement…</p></section>
+</main>
+<nav class="bottom"><button data-v="home" class="on">🏠<br>Accueil</button><button data-v="courses">📖<br>Cours</button><button data-v="quiz">✅<br>Quiz</button><button data-v="settings">👤<br>Profil</button></nav>
+</div><script src="{{ url_for('static', filename='js/app.js') }}"></script></body></html>
